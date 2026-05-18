@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+* {
+  font-family: "Oxanium", sans-serif
+}
+
+.content_title ::before {
+  font-weight: 400;
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 10vh;
+  text-align: center;
+}
+
+.hero-glow {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(
+    circle,
+    rgba(255,255,255,0.55),
+    transparent 70%
+  );
+
+  filter: blur(80px);
+
+  top: -120px;
+  left: -120px;
+
+  z-index: 0;
+}
+
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-33.333%); }
+}
