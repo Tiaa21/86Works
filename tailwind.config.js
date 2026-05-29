@@ -1,5 +1,6 @@
 // tailwind.config.js
 module.exports = {
+  reactStrictMode: false,
   content: ["./src/**/*.{html,js,jsx,ts,tsx}"],
   theme: {
     extend: {

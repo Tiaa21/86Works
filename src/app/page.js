@@ -38,22 +38,13 @@ export default function Home() {
   const mockRightRef = useRef(null);
   const mockFarRightRef = useRef(null);
   const mockLaptopRef = useRef(null);
-  const ENABLE_OPENING_ANIMATION = true;
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const hasSeenAnimation =
-    !ENABLE_OPENING_ANIMATION
-      ? true
-      : (
-        typeof sessionStorage !== "undefined" &&
-        sessionStorage.getItem("86works_seen") === "false"
-      );
-
-  const [showTypo, setShowTypo] = useState(hasSeenAnimation);
+  const [showTypo, setShowTypo] = useState(false);
   const [imagePositions, setImagePositions] = useState([]);
 
   // ─── RESPONSIVE ───────────────────────────────────────
@@ -201,9 +192,7 @@ export default function Home() {
 
   // ─── OPENING ANIMATION ───────────────────────────────────────────
   useEffect(() => {
-    if (imagePositions.length === 0 || hasSeenAnimation) return;
-
-    sessionStorage.setItem("86works_seen", "false");
+    if (imagePositions.length === 0) return;
 
     const timer = setTimeout(() => setShowTypo(true), 9500);
 
@@ -440,7 +429,7 @@ export default function Home() {
     });
 
     return () => clearTimeout(timer);
-  }, [imagePositions, hasSeenAnimation]);
+  }, [imagePositions]);
 
   if (!mounted) return null;
   return (
@@ -672,7 +661,7 @@ export default function Home() {
         <h1
           ref={titleRef}
           className="absolute top-1/2 left-1/2 text-6xl font-bold -translate-x-1/2 -translate-y-1/2 z-10 uppercase"
-          style={{ color: "#3a3a3a", opacity: hasSeenAnimation ? 0 : 1 }}
+          style={{ color: "#3a3a3a", opacity: 1 }}
         >
           86 Creative Works
         </h1>
@@ -692,7 +681,7 @@ export default function Home() {
             paddingLeft: isMobile ? "24px" : "56px",
             paddingRight: isMobile ? "24px" : "0px",
             paddingBottom: isMobile ? "0px" : "88px",
-            opacity: hasSeenAnimation ? 1 : 0,
+            opacity: 0,
           }}
         >
           <div className="flex flex-col gap-4">
