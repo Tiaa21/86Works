@@ -52,8 +52,8 @@ export default function Home() {
 
   const isTablet =
     mounted &&
-    window.innerWidth >= 768 &&
-    window.innerWidth < 1024;
+    window.innerWidth >= 1080 &&
+    window.innerWidth < 1200;
 
   const MOCKUP_POSITIONS = isMobile
     ? {
@@ -473,7 +473,22 @@ export default function Home() {
         }}
       >
 
-        {/* Scatter images — hidden entirely once showTypo=true */}
+        {/* ── TABLET OVERRIDES (1024px – 1200px) ── */}
+        {/* Taruh sekali di dalam section/parent component, sebelum elemen-elemen di bawah */}
+        <style>{`
+          @media (min-width: 1080px) and (max-width: 1200px) {
+            .note-white  { top: 20% !important; left: 55% !important; width: 180px !important; }
+            .note-logo   { top: 14% !important; left: 66% !important; width: 70px !important; height: 70px !important; }
+            .note-cream  { top: 72% !important; left: 46% !important; width: 150px !important; }
+            .note-card   { top: 66% !important; left: 72% !important; width: 100px !important; height: 170px !important; padding: 14px !important; }
+            .mock-left   { left: 56% !important; width: 140px !important; height: 185px !important; }
+            .mock-right  { left: 68% !important; width: 300px !important; height: 225px !important; }
+            .mock-far    { left: 84% !important; width: 210px !important; height: 380px !important; }
+            .mock-laptop { left: 81% !important; width: 320px !important; height: 280px !important; top: 33% !important; }
+          }
+        `}</style>
+
+        {/* Scatter images — tidak diubah */}
         <div ref={imagesRef} className="absolute inset-0" style={{ zIndex: 25 }}>
           {images.map((src, i) => {
             const depth = Math.random();
@@ -485,35 +500,24 @@ export default function Home() {
                 key={i}
                 src={src}
                 alt=""
-                className={`
-                  image absolute object-cover rounded-lg
-                  ${isMobile && isCenter ? "hidden" : ""}
-                `}
+                className={`image absolute object-cover rounded-lg z-40 ${isMobile && isCenter ? "hidden" : ""}`}
                 style={{
-                  width: isCenter ? "320px" : `clamp(90px, ${12 + depth * 10}vw, ${180 + depth * 120}px)`,
+                  width: isCenter
+                    ? isMobile
+                      ? "220px"      
+                      : isTablet
+                        ? "240px"
+                        : "320px"    
+                    : `clamp(90px, ${12 + depth * 10}vw, ${180 + depth * 120}px)`,
                   height: "auto",
-
                   top: imagePositions[i]?.top || "50%",
                   left: imagePositions[i]?.left || "50%",
-
-                  transform: isCenter
-                    ? "translate3d(-50%, -50%)"
-                    : `rotate(${Math.random() * 20 - 10}deg)`,
-
-                  opacity: isCenter
-                    ? 1
-                    : isMobile
-                      ? 0.15 + depth * 0.25
-                      : 0.3 + depth * 0.5,
+                  transform: isCenter ? "translate3d(-50%, -50%)" : `rotate(${Math.random() * 20 - 10}deg)`,
+                  opacity: isCenter ? 1 : isMobile ? 0.15 + depth * 0.25 : 0.3 + depth * 0.5,
                   zIndex: isCenter ? 25 : Math.floor(depth * 10),
-
-                  filter: isCenter
-                    ? "none"
-                    : `blur(${(1 - depth) * 3}px)`,
-
+                  filter: isCenter ? "none" : `blur(${(1 - depth) * 3}px)`,
                   willChange: "transform",
                   backfaceVisibility: "hidden",
-
                   objectFit: "contain",
                 }}
               />
@@ -521,86 +525,50 @@ export default function Home() {
           })}
         </div>
 
-        <img ref={mockLeftRef} src="images/2.svg" alt="" className="hidden md:block absolute object-contain drop-shadow-2xl/50" style={{
-          opacity: 0,
-          top: "54%",
-          left: "60%",
-          width: "175px",
-          height: "230px",
-          transform: "translate(-50%,-50%)",
-        }} />
-        <img ref={mockRightRef} src="images/1.svg" alt="" className="hidden md:block absolute object-contain drop-shadow-xl/50" style={{
-          opacity: 0,
-          top: "78%",
-          left: "73%",
-          width: "375px",
-          height: "280px",
-          transform: "translate(-50%,-50%)",
-        }} />
-        <img ref={mockFarRightRef} src="images/4.svg" alt="" className="hidden md:block absolute object-contain drop-shadow-2xl/50" style={{
-          opacity: 0,
-          top: "62%",
-          left: "89%",
-          width: "270px",
-          height: "480px",
-          transform: "translate(-50%,-50%)",
-        }} />
-        <img ref={mockLaptopRef} src="images/laptop.svg" alt="" className="hidden md:block absolute object-contain drop-shadow-xl/50" style={{
-          opacity: 0,
-          top: "35%",
-          left: "86%",
-          width: "400px",
-          height: "350px",
-          transform: "translate(-50%,-50%)",
-        }} />
+        {/* Mockup images — class ditambah untuk tablet override */}
+        <img ref={mockLeftRef} src="images/2.svg" alt=""
+          className="mock-left hidden xl:block absolute object-contain drop-shadow-2xl/50"
+          style={{ opacity: 0, top: "54%", left: "60%", width: "175px", height: "230px", transform: "translate(-50%,-50%)" }}
+        />
+        <img ref={mockRightRef} src="images/1.svg" alt=""
+          className="mock-right hidden xl:block absolute object-contain drop-shadow-xl/50"
+          style={{ opacity: 0, top: "78%", left: "73%", width: "375px", height: "280px", transform: "translate(-50%,-50%)" }}
+        />
+        <img ref={mockFarRightRef} src="images/4.svg" alt=""
+          className="mock-far hidden md:block absolute object-contain drop-shadow-2xl/50"
+          style={{ opacity: 0, top: "62%", left: "89%", width: "270px", height: "480px", transform: "translate(-50%,-50%)" }}
+        />
+        <img ref={mockLaptopRef} src="images/laptop.svg" alt=""
+          className="mock-laptop hidden md:block absolute object-contain drop-shadow-xl/50"
+          style={{ opacity: 0, top: "35%", left: "86%", width: "400px", height: "350px", transform: "translate(-50%,-50%)" }}
+        />
 
+        {/* WHITE NOTE */}
         <div
-          className="floating-note hidden md:block absolute z-[35] bg-white rounded-3xl px-6 py-5 shadow-xl"
-          style={{
-            top: "22%",
-            left: "60%",
-            width: "230px",
-            rotate: "-2deg",
-          }}
+          className="note-white floating-note hidden md:block absolute z-[35] bg-white rounded-3xl px-6 py-5 shadow-xl"
+          style={{ top: "22%", left: "60%", width: "230px", rotate: "-2deg" }}
         >
           <p className="text-[12px] text-black/70 leading-relaxed">
             We handle your social media strategically.
           </p>
-
           <p className="mt-3 text-[14px] font-semibold italic text-black leading-tight">
-            Let’s build your presence.
+            Let's build your presence.
           </p>
         </div>
 
         {/* CIRCLE LOGO STICKER */}
         <div
-          className="floating-note hidden absolute z-[40] bg-[#f5f1ea] rounded-full shadow-lg md:flex items-center justify-center"
-          style={{
-            top: "16%",
-            left: "71%",
-            width: "90px",
-            height: "90px",
-            rotate: "10deg",
-          }}
+          className="note-logo floating-note hidden absolute z-[40] bg-[#f5f1ea] rounded-full shadow-lg md:flex items-center justify-center"
+          style={{ top: "16%", left: "71%", width: "90px", height: "90px", rotate: "10deg" }}
         >
-          <img
-            src="images/logo.svg"
-            alt=""
-            className="w-10 h-10 object-contain"
-          />
-
+          <img src="images/logo.svg" alt="" className="w-10 h-10 object-contain" />
           <div className="floating-note hidden absolute inset-0 rounded-full border border-black/10" />
         </div>
 
         {/* YELLOW STICKY NOTE */}
         <div
-          className="floating-note hidden md:block absolute z-[10] bg-[#efe2a8] rounded-md shadow-xl/50 px-5 py-5"
-          style={{
-            top: "40%",
-            left: "69%",
-            width: "140px",
-            rotate: "7deg",
-          }}
+          className="note-yellow floating-note hidden xl:block absolute z-[10] bg-[#efe2a8] rounded-md shadow-xl/50 px-5 py-5"
+          style={{ top: "40%", left: "69%", width: "140px", rotate: "7deg" }}
         >
           <img src="images/tape.svg" alt="" className="absolute -top-10 right-6 w-20 h-20 object-contain opacity-80" />
           <ul className="flex flex-col gap-2 text-[12px] text-black font-semibold">
@@ -614,13 +582,8 @@ export default function Home() {
 
         {/* SMALL WHITE BOTTOM NOTE */}
         <div
-          className="floating-note hidden md:block absolute z-[36] bg-[#f8f5f1] rounded-2xl shadow-xl px-5 py-5"
-          style={{
-            top: "76%",
-            left: "38%",
-            width: "180px",
-            rotate: "8deg",
-          }}
+          className="note-cream floating-note hidden md:block absolute z-[36] bg-[#f8f5f1] rounded-2xl shadow-xl px-5 py-5"
+          style={{ top: "76%", left: "38%", width: "180px", rotate: "8deg" }}
         >
           <img src="images/tape.svg" alt="" className="absolute -top-10 right-10 w-20 h-20 object-contain opacity-90" />
           <p className="text-[15px] leading-relaxed text-black">
@@ -632,35 +595,19 @@ export default function Home() {
 
         {/* VERTICAL CARD */}
         <div
-          className="floating-note hidden absolute z-[38] bg-gradient-to-b from-zinc-50 to-zinc-300 border-1 border-zinc-300 shadow-xl rounded-md md:flex flex-col justify-between"
-          style={{
-            top: "70%",
-            left: "78%",
-            width: "120px",
-            height: "200px",
-            rotate: "2deg",
-            padding: "18px",
-          }}
+          className="note-card floating-note hidden absolute z-[38] bg-gradient-to-b from-zinc-50 to-zinc-300 border-1 border-zinc-300 shadow-xl rounded-md md:flex flex-col justify-between"
+          style={{ top: "70%", left: "78%", width: "120px", height: "200px", rotate: "2deg", padding: "18px" }}
         >
           <div className="text-[14px] leading-snug font-medium text-black">
-            Creative
-            <br />
-            Solutions
-            <br />
-            That Grow
-            <br />
-            Your Brand.
+            Creative<br />Solutions<br />That Grow<br />Your Brand.
           </div>
-
-          <div className="text-[12px] text-black/60">
-            86 works
-          </div>
+          <div className="text-[12px] text-black/60">86 works</div>
         </div>
 
         {/* Initial title */}
         <h1
           ref={titleRef}
-          className="absolute top-1/2 left-1/2 text-6xl font-bold -translate-x-1/2 -translate-y-1/2 z-10 uppercase"
+          className="text-center absolute top-1/2 left-1/2 text-6xl font-bold -translate-x-1/2 -translate-y-1/2 z-10 uppercase"
           style={{ color: "#3a3a3a", opacity: 1 }}
         >
           86 Creative Works
