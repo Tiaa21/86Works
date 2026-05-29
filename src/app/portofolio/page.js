@@ -26,7 +26,7 @@ const projects = [
     logo: "/images/projects/47.webp",
   },
   {
-    title: "BING FU Restaurant",
+    title: "BIG FU Restaurant",
     category: "Food & Beverage",
     desc: "Social media management and content creation for restaurant brand.",
     image: "/images/porto/28.png",

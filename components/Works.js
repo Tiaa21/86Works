@@ -30,7 +30,7 @@ const projects = [
     },
     {
         id: "03",
-        title: "BING FU Restaurant",
+        title: "BIG FU Restaurant",
         category: "FOOD & BEVERAGE",
         icon: <TbSoupFilled />,
         color: "#766a5a",
