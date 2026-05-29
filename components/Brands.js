@@ -17,7 +17,7 @@ export default function TrustedBrands() {
         <div className="relative flex items-center w-full overflow-hidden  py-4">
 
             {/* Static label */}
-            <div className="shrink-0 flex flex-col pr-6 pl-8 border-r border-black/10 z-10 ">
+            <div className="hidden md:flex shrink-0 flex-col pr-6 pl-8 border-r border-black/10 z-10 ">
                 <span className="text-[22px] font-semiboldd uppercase text-black/40 leading-tight">Trusted by brands of all kinds</span>
             </div>
 
@@ -34,7 +34,7 @@ export default function TrustedBrands() {
                             key={i}
                             src={`/images/brands/${logo}`}
                             alt=""
-                            className="h-26 w-auto object-contain hover:grayscale hover:opacity-100 transition-all duration-300 shrink-0"
+                            className="h-20 md:h-26 w-auto object-contain hover:grayscale hover:opacity-100 transition-all duration-300 shrink-0"
                         />
                     ))}
                 </div>
