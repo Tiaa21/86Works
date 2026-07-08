@@ -31,6 +31,9 @@ export const metadata = {
     type: "website",
   },
   metadataBase: new URL("https://86works.vercel.app"),
+  verification: {
+    google: "8psOEjnQphEuKIWQEJU2XQPtsHXY-C65zOWlV1ah8Xo",
+  },
 };
 
 export default function RootLayout({ children }) {
