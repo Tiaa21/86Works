@@ -1,5 +1,4 @@
 import { Geist, Geist_Mono, Oxanium } from "next/font/google";
-import { Metadata } from "next";
 
 import "./globals.css";
 
@@ -27,7 +26,7 @@ export const metadata = {
     description: "Creative agency Indonesia yang membantu brand tumbuh lewat strategi kreatif dan digital.",
     url: "https://86works.vercel.app",
     siteName: "86 Works",
-    images: ["./images/logo.svg"],
+    images: ["/images/logo.svg"],
     locale: "id_ID",
     type: "website",
   },
